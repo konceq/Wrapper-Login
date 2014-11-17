@@ -4,14 +4,6 @@ import db
 app = Flask(__name__)
 app.secret_key = "MTYIXatgAP2y6fIvq8MrAN8RKgHg2B8p"
 
-#wrapper to check if logged in
-def loggedIn(func):
-    @wraps(func)
-    def inner():
-        if "user" in session:
-            return func()
-    return inner()
-            
 #HOME:
 @app.route("/")
 def home():
@@ -122,23 +114,19 @@ def register():
             #return redirect('/home')
 
 #SECRET PAGE 1:
-
-
 @app.route("/shhh")
-@LoggedIn
 def page1():
-  # if "user" not in session:
-   #   redirect("/login")
-   #else:
+   if "user" not in session:
+      redirect("/login")
+   else:
       return render_template("secret1.html")
 
 #SECRET PAGE 2:
 @app.route("/shhh2")
-@LoggedIn
 def page2():
-  # if "user" not in session:
-   #   redirect("/login")
-  # else:
+   if "user" not in session:
+      redirect("/login")
+   else:
       return render_template("secret2.html")
 
 if __name__ == "__main__":
